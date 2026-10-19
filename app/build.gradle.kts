@@ -6,7 +6,9 @@ plugins {
 android {
     namespace = "com.example.inkpiki"
     compileSdk {
-        version = release(37)
+        version = release(36) {
+            minorApiLevel = 1
+        }
     }
 
     defaultConfig {
