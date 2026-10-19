@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.inkpiki.ui.theme.InkPikiTheme
 
 class MainActivity : ComponentActivity() {
+    //Espabila ismael 7
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
