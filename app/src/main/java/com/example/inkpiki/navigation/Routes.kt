@@ -2,18 +2,14 @@ package com.example.inkpiki.navigation
 
 import kotlinx.serialization.Serializable
 
-sealed interface Routes{
+@Serializable
+sealed class Routes(val routes: String){
     @Serializable
-    data object Register : Routes
+    object Register: Routes("Register")
     @Serializable
-    data object Login : Routes
+    object Login: Routes("Login")
     @Serializable
-    data object Home : Routes
+    object Home: Routes("Home")
     @Serializable
-    data object Settings : Routes
-    @Serializable
-    data class ArtDetails(val ) : Routes
-    @Serializable
-    data class Sale(val ) : Routes
-
+    object Profile: Routes("Home")
 }
