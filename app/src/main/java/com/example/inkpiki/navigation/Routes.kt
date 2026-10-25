@@ -5,11 +5,11 @@ import kotlinx.serialization.Serializable
 @Serializable
 sealed class Routes(val route: String) {
     @Serializable
-    object Register: Routes("Register")
+    object Register: Routes("registerScreen")
     @Serializable
-    object Login: Routes("Login")
+    object Login: Routes("loginScreen")
     @Serializable
-    object Home: Routes("Home")
+    object Home: Routes("homeScreen")
     @Serializable
-    object Profile: Routes("Home")
+    object Profile: Routes("profileScreen")
 }

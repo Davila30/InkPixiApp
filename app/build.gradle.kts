@@ -1,16 +1,13 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
-
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
 }
 
 android {
     namespace = "com.example.inkpiki"
-    compileSdk {
-        version = release(26) {
-            minorApiLevel = 1
-        }
-    }
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.inkpiki"
@@ -40,6 +37,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.navigation.compose)
     //Serializable y navigation
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
 
