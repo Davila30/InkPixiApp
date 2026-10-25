@@ -3,7 +3,7 @@ package com.example.inkpiki.navigation
 import kotlinx.serialization.Serializable
 
 @Serializable
-sealed class Routes(val routes: String){
+sealed class Routes(val route: String) {
     @Serializable
     object Register: Routes("Register")
     @Serializable

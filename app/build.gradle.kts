@@ -1,20 +1,21 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+
 }
 
 android {
     namespace = "com.example.inkpiki"
     compileSdk {
-        version = release(36) {
+        version = release(26) {
             minorApiLevel = 1
         }
     }
 
     defaultConfig {
         applicationId = "com.example.inkpiki"
-        minSdk = 35
-        targetSdk = 37
+        minSdk = 26
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -39,6 +40,13 @@ android {
 }
 
 dependencies {
+    //Serializable y navigation
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
+
+    //Hilt
+    implementation("com.google.dagger:hilt-android:2.60.1")
+    ksp("com.google.dagger:hilt-android-compiler:2.60.1")
+    //
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.material3)
