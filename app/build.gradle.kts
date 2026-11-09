@@ -37,8 +37,13 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.navigation.compose)
+    //RetroFit
+    implementation("com.squareup.retrofit2:retrofit:3.0.0")
+    implementation("com.squareup.retrofit2:converter-gson:3.0.0")
+    implementation(libs.androidx.compose.foundation)
     //Serializable y navigation
+    implementation(libs.androidx.navigation.compose)
+
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
 
     //Hilt
