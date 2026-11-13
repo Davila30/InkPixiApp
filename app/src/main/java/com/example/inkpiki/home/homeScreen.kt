@@ -40,7 +40,7 @@ fun HomeScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .background(Pinki)
+                .background(Grey)
                 .verticalScroll(rememberScrollState())
         ) {
             HomeHeader()
@@ -106,12 +106,12 @@ fun ActionButtons() {
 
         OutlinedButton(
             onClick = { },
-            colors = ButtonDefaults.outlinedButtonColors(contentColor = ),
+            colors = ButtonDefaults.outlinedButtonColors(containerColor = Color.White),
             border = BorderStroke(2.dp, Darkviolet),
             shape = RoundedCornerShape(12.dp),
             modifier = Modifier.weight(1f).height(48.dp)
         ) {
-            Text("Crear mi portfolio", color = Color.Black, fontSize = 14.sp)
+            Text("Crear mi portfolio", color = DarkPurple, fontSize = 14.sp)
         }
     }
 }
