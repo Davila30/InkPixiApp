@@ -134,8 +134,6 @@ fun FeaturedIllustrationsPlaceholder() {
     }
 }
 
-
-
 @Preview
 @Composable
 fun HomeScreenPreview() {

@@ -37,10 +37,14 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.ui.graphics)
+
     //Serializable y navigation
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
-
+    //iconos
+    implementation("androidx.compose.material:material-icons-extended")
     //Hilt
     implementation("com.google.dagger:hilt-android:2.60.1")
     ksp("com.google.dagger:hilt-android-compiler:2.60.1")
