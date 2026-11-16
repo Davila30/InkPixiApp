@@ -31,7 +31,7 @@ fun HomeScreen(
             ) {
             }
         },
-        containerColor = Color.Grey
+        containerColor = Color.Gray
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -48,7 +48,6 @@ fun HomeTopBar() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            //.background(LightPurpleBg)
             .padding(horizontal = 24.dp, vertical = 16.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
