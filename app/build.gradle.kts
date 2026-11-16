@@ -37,15 +37,14 @@ android {
 }
 
 dependencies {
-    //RetroFit
-    implementation("com.squareup.retrofit2:retrofit:3.0.0")
-    implementation("com.squareup.retrofit2:converter-gson:3.0.0")
-    implementation(libs.androidx.compose.foundation)
-    //Serializable y navigation
+    implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.ui.graphics)
 
+    //Serializable y navigation
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
-
+    //iconos
+    implementation("androidx.compose.material:material-icons-extended")
     //Hilt
     implementation("com.google.dagger:hilt-android:2.60.1")
     ksp("com.google.dagger:hilt-android-compiler:2.60.1")
