@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.inkpiki.ui.theme.DarkPurple
@@ -120,4 +121,11 @@ fun RegisterScreen(
             Text("¿Ya tienes cuenta? Inicia sesión", color = DarkPurple)
         }
     }
+}
+@Preview
+@Composable
+fun RegisterScreenPreview(){
+    RegisterScreen(
+
+    )
 }

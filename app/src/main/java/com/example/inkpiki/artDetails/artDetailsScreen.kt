@@ -110,7 +110,6 @@ fun ArtworkDetailScreen(
                         fontWeight = FontWeight.Medium
                     )
                     Text(
-                        text = artwork.price,
                         color = Color.White,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold
@@ -195,7 +194,6 @@ fun ArtworkDetailScreen(
         )
     }
 }
-// Vista Previa para probar en Android Studio
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun ArtworkDetailScreenPreview() {
