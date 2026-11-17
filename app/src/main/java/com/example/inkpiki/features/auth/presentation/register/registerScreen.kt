@@ -122,10 +122,10 @@ fun RegisterScreen(
         }
     }
 }
-@Preview
+/*@Preview
 @Composable
 fun RegisterScreenPreview(){
     RegisterScreen(
 
     )
-}
+} */

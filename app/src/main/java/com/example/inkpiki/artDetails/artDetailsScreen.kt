@@ -1,6 +1,5 @@
 package com.example.inkpiki.artDetails
 
-import android.graphics.drawable.Icon
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -24,22 +23,12 @@ import com.example.inkpiki.ui.theme.Darkviolet
 import com.example.inkpiki.ui.theme.Grey
 
 
-data class ArtworkMock(//esto es para la prueba visual
-    val id: String = "1",
-    val title: String = "Donde duerme la luna",
-    val description: String = "Una ilustración digital que explora la tranquilidad de la noche en un valle imaginario. Los tonos fríos contrastan con la cálida luz de las pequeñas casas esparcidas por la montaña. Perfecta para ambientes relajantes.",
-    val price: String = "45.00 €",
-    val authorName: String = "Dani Ávila",
-    val imageUrl: String = "",
-    val category: String = "Ilustración digital"
-)
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArtworkDetailScreen(
     onNavigateBack: () -> Unit // Ejecuta el popBackStack()
 ) {
-    val artwork = ArtworkMock()
+    val artwork = ArtworkMocks.all.first() // Datos mock hasta que haya API
     var showDeleteDialog by remember { mutableStateOf(false) }
 
     Scaffold(
@@ -110,6 +99,7 @@ fun ArtworkDetailScreen(
                         fontWeight = FontWeight.Medium
                     )
                     Text(
+                        text = artwork.priceLabel,
                         color = Color.White,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold
