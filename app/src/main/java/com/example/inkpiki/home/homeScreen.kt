@@ -17,18 +17,27 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.inkpiki.ui.theme.DarkPurple
-import com.example.inkpiki.ui.theme.Darkviolet
-import com.example.inkpiki.ui.theme.Pinki
-import com.example.inkpiki.ui.theme.Grey
-import com.example.inkpiki.ui.theme.violet
+import com.example.inkpiki.ui.components.InkPixiBottomNavigation
+import com.example.inkpiki.ui.components.InkPixiLogo
+import com.example.inkpiki.ui.theme.InkPikiTheme
 
 @Composable
 fun HomeScreen(
     viewModel: homeViewModel,
-    onNavigateToProfile: () -> Unit) {
+    onNavigateToHome: () -> Unit = {},
+    onNavigateToExplore: () -> Unit = {},
+    onNavigateToProfile: () -> Unit
+) {
     Scaffold(
         topBar = { HomeTopBar() },
+        bottomBar = {
+            InkPixiBottomNavigation(
+                currentRoute = "home",
+                onNavigateHome = onNavigateToHome,
+                onNavigateExplore = onNavigateToExplore,
+                onNavigateProfile = onNavigateToProfile
+            )
+        },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { },
@@ -40,7 +49,7 @@ fun HomeScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .background(Grey)
+                .background(MaterialTheme.colorScheme.background)
                 .verticalScroll(rememberScrollState())
         ) {
             HomeHeader()
@@ -54,22 +63,17 @@ fun HomeTopBar() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Darkviolet)
-            .padding(horizontal = 24.dp, vertical = 16.dp),
+            .background(MaterialTheme.colorScheme.secondary)
+            .padding(horizontal = 24.dp, vertical = 8.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(
-            text = "InkPixi",
-            color = DarkPurple,
-            fontSize = 28.sp,
-            fontWeight = FontWeight.ExtraBold
-        )
+        InkPixiLogo()
         Box(
             modifier = Modifier
                 .size(40.dp)
                 .clip(CircleShape)
-                .background(DarkPurple),
+                .background(MaterialTheme.colorScheme.primary),
             contentAlignment = Alignment.Center
         ) {
         }
@@ -95,23 +99,21 @@ fun ActionButtons() {
     ) {
         Button(
             onClick = { },
-            colors = ButtonDefaults.buttonColors(containerColor = DarkPurple),
             shape = RoundedCornerShape(12.dp),
             modifier = Modifier.weight(1f).height(48.dp)
         ) {
-            Text("Abrir la galería", color = Color.White, fontSize = 14.sp)
+            Text("Abrir la galería", color = MaterialTheme.colorScheme.onPrimary, fontSize = 14.sp)
             Spacer(modifier = Modifier.width(8.dp))
 
         }
-
         OutlinedButton(
             onClick = { },
-            colors = ButtonDefaults.outlinedButtonColors(containerColor = Color.White),
-            border = BorderStroke(2.dp, Darkviolet),
+            colors = ButtonDefaults.outlinedButtonColors(containerColor = MaterialTheme.colorScheme.surface),
+            border = BorderStroke(2.dp, MaterialTheme.colorScheme.secondary),
             shape = RoundedCornerShape(12.dp),
             modifier = Modifier.weight(1f).height(48.dp)
         ) {
-            Text("Crear mi portfolio", color = DarkPurple, fontSize = 14.sp)
+            Text("Crear mi portfolio", color = MaterialTheme.colorScheme.primary, fontSize = 14.sp)
         }
     }
 }
@@ -127,18 +129,20 @@ fun FeaturedIllustrationsPlaceholder() {
         Box(
             modifier = Modifier
                 .size(150.dp)
-                .background(DarkPurple.copy(alpha = 0.5f))
+                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.5f))
                 .align(Alignment.Center)
         )
-        Text("fotos polaroid", color = Grey, fontSize = 14.sp)
+        Text("fotos polaroid", color = MaterialTheme.colorScheme.background, fontSize = 14.sp)
     }
 }
 
 @Preview
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen(
-        viewModel = homeViewModel(),
-        onNavigateToProfile = {}
-    )
+    InkPikiTheme {
+        HomeScreen(
+            viewModel = homeViewModel(),
+            onNavigateToProfile = {}
+        )
+    }
 }

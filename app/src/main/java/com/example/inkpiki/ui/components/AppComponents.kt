@@ -1,6 +1,9 @@
 package com.example.inkpiki.ui.components
 
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.size
+import com.example.inkpiki.R
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Explore
 import androidx.compose.material.icons.filled.Home
@@ -13,22 +16,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.inkpiki.ui.theme.DarkPurple
 import com.example.inkpiki.ui.theme.Darkviolet
 
 @Composable
-fun InkPixisLogo(modifier: Modifier = Modifier) {
-    Text(
-        text = "InkPixis",
-        color = DarkPurple,
-        fontSize = 36.sp,
-        fontWeight = FontWeight.ExtraBold,
-        modifier = modifier.padding(vertical = 32.dp)
-    )
+fun InkPixiLogo(modifier: Modifier = Modifier) {
+    Image(painter = painterResource(id = R.drawable.inkpixilogo),
+        contentDescription = "logo de InkPixi",
+        modifier = modifier.size(80.dp))
 }
 @Composable
 fun InkPixiBottomNavigation(
@@ -39,9 +37,9 @@ fun InkPixiBottomNavigation(
 ) {
     NavigationBar(
         contentColor = DarkPurple,
-        tonalElevation = 8.dp
+        tonalElevation = 8.dp,
+        windowInsets = WindowInsets(0.dp) //
     ) {
-        // Pestaña Inicio
         val navItemColors = NavigationBarItemDefaults.colors(
             selectedIconColor = DarkPurple,
             selectedTextColor = DarkPurple,

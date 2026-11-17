@@ -1,6 +1,5 @@
 package com.example.inkpiki.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -13,33 +12,34 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = Darkviolet,
+    secondary = violet,
+    tertiary = Pinki,
+    background = Color(0xFF121212), //Fondo oscuro genérico
+    surface = Color(0xFF1E1E1E), //Superficie oscura
+    onPrimary = DarkPurple,
+    onSecondary = DarkPurple,
+    onBackground = Grey,
+    onSurface = Grey
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40,
-    background = Grey
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    primary = DarkPurple,
+    secondary = Darkviolet,
+    tertiary = Pinki,
+    background = Grey,
+    surface = Color.White, //Para tarjetas (Cards),contenedores y mas...
+    primaryContainer = violet, //Para fondos de elementos seleccionados o contenedores primarios
+    onPrimary = Color.White, //Texto sobre el color primario (botones)
+    onBackground = Color(0xFF1C1B1F), //Texto sobre el fondo
+    onSurface = Color(0xFF1C1B1F) //Texto sobre las superficies (Cards)
 )
 
 @Composable
 fun InkPikiTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    //Importante para que se vea en version antigua
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {

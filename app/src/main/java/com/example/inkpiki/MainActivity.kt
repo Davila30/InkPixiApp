@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
+import com.example.inkpiki.home.HomeScreenPreview
 import com.example.inkpiki.navigation.AppNavHost
 import com.example.inkpiki.ui.theme.InkPikiTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,6 +25,7 @@ class MainActivity : ComponentActivity() {
                     // Aquí cargamos la navegación, que empieza en el login
                     Box(modifier = Modifier.padding(innerPadding)) {
                         AppNavHost()
+                        HomeScreenPreview()
                     }
                 }
             }

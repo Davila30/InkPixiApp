@@ -1,10 +1,14 @@
 package com.example.inkpiki.artDetails
 
+import android.graphics.drawable.Icon
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Home
 
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -37,6 +41,12 @@ fun ArtworkDetailScreen(
                 title = { Text("Detalle de obra", fontSize = 18.sp, fontWeight = FontWeight.Bold) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            tint = DarkPurple,
+
+                            contentDescription = "Volver atrás"
+                        )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -69,16 +79,9 @@ fun ArtworkDetailScreen(
             }
             //Bloque de info de la obra
             Column(modifier = Modifier.padding(horizontal = 24.dp)) {
-                /*Text(
-                    text = artwork.category.uppercase(),
-                    color = Grey,
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Bold,
-                    letterSpacing = 1.sp
-                )*/
                 Spacer(modifier = Modifier.height(4.dp))
-                // Título
-                Text(
+
+                Text(// Título de obra
                     text = artwork.title,
                     color = Color.DarkGray,
                     fontSize = 28.sp,
@@ -86,13 +89,12 @@ fun ArtworkDetailScreen(
                     fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                // Autor
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(
+                    Text(// Autor
                         text = "By ${artwork.authorName}",
                         color = Color.Black,
                         fontSize = 16.sp,
