@@ -1,6 +1,5 @@
 package com.example.inkpiki.artDetails
 
-import android.graphics.drawable.Icon
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -27,12 +26,27 @@ import com.example.inkpiki.ui.theme.Darkviolet
 import com.example.inkpiki.ui.theme.Grey
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+// Punto de entrada de la ruta: busca la obra por id y decide qué mostrar
 @Composable
 fun ArtworkDetailScreen(
+    artworkId: String,
     onNavigateBack: () -> Unit // Ejecuta el popBackStack()
 ) {
-    val artwork = ArtworkMocks.all.first() // Datos mock hasta que haya API
+    val artwork = ArtworkMocks.findById(artworkId) // Datos mock hasta que haya API
+
+    if (artwork != null) {
+        ArtworkDetailContent(artwork = artwork, onNavigateBack = onNavigateBack)
+    } else {
+        ArtworkNotFound(onNavigateBack = onNavigateBack)
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun ArtworkDetailContent(
+    artwork: Artwork,
+    onNavigateBack: () -> Unit
+) {
     var showDeleteDialog by remember { mutableStateOf(false) }
 
     Scaffold(
@@ -186,10 +200,49 @@ fun ArtworkDetailScreen(
         )
     }
 }
+
+// Se muestra si llega un id que no existe en los datos
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun ArtworkNotFound(onNavigateBack: () -> Unit) {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Detalle de obra", fontSize = 18.sp, fontWeight = FontWeight.Bold) },
+                navigationIcon = {
+                    IconButton(onClick = onNavigateBack) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            tint = DarkPurple,
+                            contentDescription = "Volver atrás"
+                        )
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.White,
+                    titleContentColor = DarkPurple,
+                    navigationIconContentColor = Darkviolet
+                )
+            )
+        },
+        containerColor = Color.White
+    ) { paddingValues ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues),
+            contentAlignment = Alignment.Center
+        ) {
+            Text("No se ha encontrado la obra", color = Color.DarkGray, fontSize = 16.sp)
+        }
+    }
+}
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun ArtworkDetailScreenPreview() {
     ArtworkDetailScreen(
+        artworkId = "1",
         onNavigateBack = { /* Simula el popBackStack */ }
     )
 }

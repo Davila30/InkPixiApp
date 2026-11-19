@@ -1,10 +1,13 @@
 package com.example.inkpiki.navigation
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.example.inkpiki.artDetails.ArtworkCatalogPlaceholder
+import com.example.inkpiki.artDetails.ArtworkDetailScreen
 import com.example.inkpiki.features.auth.presentation.login.LoginScreen
 import com.example.inkpiki.features.auth.presentation.register.RegisterScreen
 
@@ -40,10 +43,29 @@ fun AppNavHost() {
             )
         }
 
-        // Home con texto prueba
+        // Home: catálogo provisional hasta que esté la cuadrícula con ArtworkCard
         composable(Routes.HOME) {
-            Text("Home (pendiente)")
+            ArtworkCatalogPlaceholder(
+                // Al pulsar una obra vamos a su detalle pasando el id
+                onArtworkClick = { artworkId ->
+                    navController.navigate(Routes.artworkDetail(artworkId))
+                }
+            )
+        }
+
+        // Detalle de obra: la ruta lleva el id como parámetro
+        composable(
+            route = Routes.ARTWORK_DETAIL,
+            arguments = listOf(
+                navArgument(Routes.ARTWORK_ID_ARG) { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val artworkId = backStackEntry.arguments?.getString(Routes.ARTWORK_ID_ARG).orEmpty()
+            ArtworkDetailScreen(
+                artworkId = artworkId,
+                // Botón de arriba y gesto atrás: vuelve al catálogo sin recargar
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
     }
 }
-
