@@ -6,10 +6,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.inkpiki.artDetails.ArtworkCatalogPlaceholder
 import com.example.inkpiki.artDetails.ArtworkDetailScreen
 import com.example.inkpiki.features.auth.presentation.login.LoginScreen
 import com.example.inkpiki.features.auth.presentation.register.RegisterScreen
+import com.example.inkpiki.home.HomeScreen // NUEVO: ya no usamos el catálogo provisional
+import com.example.inkpiki.profile.ProfileScreen // NUEVO
 
 @Composable
 fun AppNavHost() {
@@ -43,13 +44,22 @@ fun AppNavHost() {
             )
         }
 
-        // Home: catálogo provisional hasta que esté la cuadrícula con ArtworkCard
+        // Home: ahora es la pantalla real, con la barra de búsqueda y la lista de obras
         composable(Routes.HOME) {
-            ArtworkCatalogPlaceholder(
+            HomeScreen(
+                // Pestaña Perfil de la barra inferior
+                onNavigateToProfile = { navController.navigate(Routes.PROFILE) },
                 // Al pulsar una obra vamos a su detalle pasando el id
                 onArtworkClick = { artworkId ->
                     navController.navigate(Routes.artworkDetail(artworkId))
                 }
+            )
+        }
+
+        // Perfil: por ahora es la pantalla de prueba, solo para que la pestaña funcione
+        composable(Routes.PROFILE) {
+            ProfileScreen(
+                onNavigateBackToHome = { navController.popBackStack() }
             )
         }
 

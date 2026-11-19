@@ -9,10 +9,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue // NUEVO
-import androidx.compose.runtime.mutableStateOf // NUEVO
-import androidx.compose.runtime.saveable.rememberSaveable // NUEVO
-import androidx.compose.runtime.setValue // NUEVO
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember // NUEVO
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,21 +22,41 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.inkpiki.artDetails.Artwork // NUEVO
+import com.example.inkpiki.artDetails.ArtworkMocks // NUEVO
+import com.example.inkpiki.artDetails.priceLabel // NUEVO
 import com.example.inkpiki.ui.components.InkPixiBottomNavigation
 import com.example.inkpiki.ui.components.InkPixiLogo
-import com.example.inkpiki.ui.components.InkPixiSearchBar // NUEVO
+import com.example.inkpiki.ui.components.InkPixiSearchBar
 import com.example.inkpiki.ui.theme.InkPikiTheme
 
 @Composable
 fun HomeScreen(
-    viewModel: homeViewModel,
+    // NUEVO: valor por defecto para no tener que pasarlo desde el NavHost
+    viewModel: homeViewModel = remember { homeViewModel() },
     onNavigateToHome: () -> Unit = {},
     onNavigateToExplore: () -> Unit = {},
-    onNavigateToProfile: () -> Unit
+    onNavigateToProfile: () -> Unit,
+    onArtworkClick: (String) -> Unit = {} // NUEVO: avisa al NavHost de qué obra se pulsó
 ) {
-    // NUEVO: texto de la búsqueda. Cuando homeViewModel sea un ViewModel real,
+    // Texto de la búsqueda. Cuando homeViewModel sea un ViewModel real,
     // este estado se mueve allí y aquí solo se lee.
     var query by rememberSaveable { mutableStateOf("") }
+
+    // NUEVO: obras que coinciden con la búsqueda (por título, autor o categoría).
+    // Si no hay texto se muestran todas. Cuando haya API, esto se cambia por la llamada.
+    val filteredArtworks = remember(query) {
+        val text = query.trim()
+        if (text.isEmpty()) {
+            ArtworkMocks.all
+        } else {
+            ArtworkMocks.all.filter { artwork ->
+                artwork.title.contains(text, ignoreCase = true) ||
+                        artwork.authorName.contains(text, ignoreCase = true) ||
+                        artwork.category.contains(text, ignoreCase = true)
+            }
+        }
+    }
 
     Scaffold(
         topBar = { HomeTopBar() },
@@ -62,16 +83,21 @@ fun HomeScreen(
                 .verticalScroll(rememberScrollState())
         ) {
             HomeHeader()
-            // NUEVO: barra de búsqueda bajo el titular
+            // Barra de búsqueda bajo el titular
             InkPixiSearchBar(
                 query = query,
                 onQueryChange = { query = it },
-                onSearch = { /* TODO: filtrar las obras cuando haya datos o API */ },
+                onSearch = { /* El filtro ya se aplica al escribir; aquí iría la llamada a la API */ },
                 modifier = Modifier.padding(horizontal = 24.dp)
             )
-            Spacer(modifier = Modifier.height(16.dp)) // NUEVO
+            Spacer(modifier = Modifier.height(16.dp))
             ActionButtons()
             FeaturedIllustrationsPlaceholder()
+            // NUEVO: lista de obras (filtrada por la búsqueda)
+            ArtworkResults(
+                artworks = filteredArtworks,
+                onArtworkClick = onArtworkClick
+            )
         }
     }
 }
@@ -150,6 +176,53 @@ fun FeaturedIllustrationsPlaceholder() {
                 .align(Alignment.Center)
         )
         Text("fotos polaroid", color = MaterialTheme.colorScheme.background, fontSize = 14.sp)
+    }
+}
+
+// NUEVO: sección "Recién llegadas al cuaderno" con las obras.
+// Es provisional hasta que esté la cuadrícula real con ArtworkCard,
+// que solo tiene que llamar a onArtworkClick(artwork.id) al pulsar una tarjeta.
+@Composable
+fun ArtworkResults(
+    artworks: List<Artwork>,
+    onArtworkClick: (String) -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 24.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        Text(
+            text = "Recién llegadas al cuaderno",
+            fontSize = 22.sp,
+            fontWeight = FontWeight.Bold
+        )
+
+        if (artworks.isEmpty()) {
+            // Si la búsqueda no encuentra nada
+            Text(
+                text = "No hay obras que coincidan con tu búsqueda",
+                fontSize = 14.sp,
+                color = Color.Gray
+            )
+        } else {
+            artworks.forEach { artwork ->
+                Card(
+                    onClick = { onArtworkClick(artwork.id) },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Column(modifier = Modifier.padding(16.dp)) {
+                        Text(text = artwork.title, style = MaterialTheme.typography.titleMedium)
+                        Text(
+                            text = "By ${artwork.authorName} · ${artwork.priceLabel}",
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    }
+                }
+            }
+        }
+        Spacer(modifier = Modifier.height(24.dp))
     }
 }
 
