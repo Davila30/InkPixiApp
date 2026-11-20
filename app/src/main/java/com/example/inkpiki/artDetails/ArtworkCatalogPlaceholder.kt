@@ -38,7 +38,7 @@ fun ArtworkCatalogPlaceholder(
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(text = artwork.title, style = MaterialTheme.typography.titleMedium)
                     Text(
-                        text = "By ${artwork.authorName} · ${artwork.priceLabel}",
+                        text = "By ${artwork.authorName}",
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }

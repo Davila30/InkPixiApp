@@ -114,12 +114,6 @@ private fun ArtworkDetailContent(
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Medium
                     )
-                    Text(
-                        text = artwork.priceLabel,
-                        color = Color.White,
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold
-                    )
                 }
                 Spacer(modifier = Modifier.height(24.dp))
                 //Descripocon
