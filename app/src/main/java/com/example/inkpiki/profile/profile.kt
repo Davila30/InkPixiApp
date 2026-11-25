@@ -111,6 +111,14 @@ fun ProfileScreen(
                 ProfileHeaderCard(profile = profile)
             }
 
+            // 2) Pestañas
+            item(span = { GridItemSpan(maxLineSpan) }) {
+                ProfileTabs(
+                    selectedTab = viewModel.selectedTab,
+                    onTabSelected = { viewModel.onTabSelected(it) }
+                )
+            }
+
         }
     }
 }
@@ -275,6 +283,23 @@ private fun ProfileHeaderCard(profile: ArtistProfile) {
                 },
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+    }
+}
+
+@Composable
+private fun ProfileTabs(selectedTab: Int, onTabSelected: (Int) -> Unit) {
+    SecondaryTabRow(
+        selectedTabIndex = selectedTab,
+        containerColor = Color.Transparent,
+        contentColor = MaterialTheme.colorScheme.primary
+    ) {
+        TAB_TITLES.forEachIndexed { index, title ->
+            Tab(
+                selected = selectedTab == index,
+                onClick = { onTabSelected(index) },
+                text = { Text(title, maxLines = 1, style = MaterialTheme.typography.labelLarge) }
             )
         }
     }
