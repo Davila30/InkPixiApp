@@ -17,3 +17,5 @@ val violet = Color(0xFFE8DDF7)
 val Pinki = Color(0xFFEEDCE7)
 //fondo
 val Grey = Color(0xFFF2F1F0)
+
+val Cream = Color(0xFFFCFAF4) //Para el fondo color crema para el perfil
