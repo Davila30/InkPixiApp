@@ -61,8 +61,6 @@ import com.example.inkpiki.ui.components.ArtworkCard
 import com.example.inkpiki.ui.components.InkPixiBottomNavigation
 import com.example.inkpiki.ui.theme.Cream
 import com.example.inkpiki.ui.theme.InkPikiTheme
-
-private val OpenGreen = Color(0xFF2E7D32) // puntito de "Abierta a nuevos proyectos"
 private val TAB_TITLES = listOf("Obras", "Colecciones", "Bocetos y proceso")
 
 @Composable
@@ -119,6 +117,39 @@ fun ProfileScreen(
                 )
             }
 
+            if (viewModel.selectedTab == 0) {
+                // 3) Cabecera de la galería
+                item(span = { GridItemSpan(maxLineSpan) }) {
+                    GalleryHeader()
+                }
+                // 4) Obras del artista
+                if (artworks.isEmpty()) {
+                    item(span = { GridItemSpan(maxLineSpan) }) {
+                        Text(
+                            text = "Este artista todavía no ha publicado obras",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.padding(vertical = 16.dp)
+                        )
+                    }
+                } else {
+                    items(artworks, key = { it.id }) { artwork ->
+                        ArtworkCard(
+                            artwork = artwork,
+                            onClick = { onArtworkClick(artwork.id) }
+                        )
+                    }
+                }
+            } else {
+                item(span = { GridItemSpan(maxLineSpan) }) {
+                    Text(
+                        text = "Próximamente",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(vertical = 24.dp)
+                    )
+                }
+            }
         }
     }
 }
@@ -224,7 +255,7 @@ private fun ProfileHeaderCard(profile: ArtistProfile) {
                             )
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
-                                text = "Abierta a nuevos proyectos",
+                                text = "Abierto a nuevos proyectos",
                                 style = MaterialTheme.typography.bodySmall,
                                 fontWeight = FontWeight.Bold,
                                 color = MaterialTheme.colorScheme.onSurface
@@ -302,6 +333,31 @@ private fun ProfileTabs(selectedTab: Int, onTabSelected: (Int) -> Unit) {
                 text = { Text(title, maxLines = 1, style = MaterialTheme.typography.labelLarge) }
             )
         }
+    }
+}
+
+@Composable
+private fun GalleryHeader() {
+    // En claro, fondo crema como en el Figma; en oscuro, la superficie normal
+    val sectionColor = if (isSystemInDarkTheme()) MaterialTheme.colorScheme.surface else Cream
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(sectionColor, RoundedCornerShape(20.dp))
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp)
+    ) {
+        Text(
+            text = "Un vistazo a mis mundos",
+            style = MaterialTheme.typography.headlineSmall,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.onSurface
+        )
+        Text(
+            text = "Escenarios, personajes y pequeños refugios. Cada pieza tiene una historia detrás.",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
     }
 }
 

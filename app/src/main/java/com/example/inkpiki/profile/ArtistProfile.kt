@@ -12,7 +12,6 @@ data class ArtistProfile(
     val tags: List<String>,
     val isOpenToWork: Boolean,
     val languages: List<String>,
-    val website: String,
     // Nombre con el que aparecen sus obras en ArtworkMocks (así sabemos cuáles son suyas)
     val authorName: String
 )
@@ -28,7 +27,6 @@ object ArtistProfileMocks {
         tags = listOf("Fantasía acogedora", "Oscuro y lápiz", "Concept art"),
         isOpenToWork = true,
         languages = listOf("Español", "Inglés"),
-        website = "Avila-ilustra.com",
         authorName = "Ávila"
     )
 }
