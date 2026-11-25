@@ -56,10 +56,15 @@ fun AppNavHost() {
             )
         }
 
-        // Perfil: por ahora es la pantalla de prueba, solo para que la pestaña funcione
+        // Perfil del artista: cabecera, pestañas y galería de obras
         composable(Routes.PROFILE) {
             ProfileScreen(
-                onNavigateBackToHome = { navController.popBackStack() }
+                // Pestaña Inicio de la barra inferior: volvemos a Home
+                onNavigateToHome = { navController.popBackStack() },
+                // Al pulsar una obra vamos a su detalle (y atrás vuelve al perfil)
+                onArtworkClick = { artworkId ->
+                    navController.navigate(Routes.artworkDetail(artworkId))
+                }
             )
         }
 
