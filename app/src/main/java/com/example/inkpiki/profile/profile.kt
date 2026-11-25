@@ -106,13 +106,176 @@ fun ProfileScreen(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            // (provisional) aquí irán la cabecera, las pestañas y la galería
+            // 1) Tarjeta de cabecera del artista
             item(span = { GridItemSpan(maxLineSpan) }) {
-                Text(
-                    text = "Perfil de ${profile.fullName}",
-                    style = MaterialTheme.typography.headlineSmall
-                )
+                ProfileHeaderCard(profile = profile)
             }
+
+        }
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun ProfileHeaderCard(profile: ArtistProfile) {
+    var menuExpanded by remember { mutableStateOf(false) }
+
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(20.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                verticalAlignment = Alignment.Top
+            ) {
+                // Avatar (placeholder hasta cargar la URL con Coil)
+                Box(
+                    modifier = Modifier
+                        .size(96.dp)
+                        .background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Person,
+                        contentDescription = "Foto de ${profile.fullName}",
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.size(48.dp)
+                    )
+                }
+
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.Top
+                    ) {
+                        Text(
+                            text = profile.fullName,
+                            style = MaterialTheme.typography.headlineSmall,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onSurface,
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(top = 8.dp)
+                        )
+                        // Engranaje con menú desplegable
+                        Box {
+                            IconButton(
+                                onClick = { menuExpanded = true },
+                                modifier = Modifier.size(40.dp)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Settings,
+                                    contentDescription = "Ajustes del perfil",
+                                    tint = MaterialTheme.colorScheme.primary
+                                )
+                            }
+                            DropdownMenu(
+                                expanded = menuExpanded,
+                                onDismissRequest = { menuExpanded = false }
+                            ) {
+                                DropdownMenuItem(
+                                    text = { Text("Cambiar lenguaje") },
+                                    trailingIcon = { Icon(Icons.Outlined.Language, contentDescription = null) },
+                                    onClick = {
+                                        menuExpanded = false
+                                        // TODO: cambiar idioma (DataStore)
+                                    }
+                                )
+                                DropdownMenuItem(
+                                    text = { Text("Editar perfil") },
+                                    trailingIcon = { Icon(Icons.Outlined.Edit, contentDescription = null) },
+                                    onClick = {
+                                        menuExpanded = false
+                                        // TODO: pantalla de edición de perfil
+                                    }
+                                )
+                            }
+                        }
+                    }
+                    Text(
+                        text = "@${profile.username}",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    if (profile.isOpenToWork) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Box(
+                                modifier = Modifier
+                                    .size(8.dp)
+                                    .background(OpenGreen, CircleShape)
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(
+                                text = "Abierta a nuevos proyectos",
+                                style = MaterialTheme.typography.bodySmall,
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.onSurface
+                            )
+                        }
+                    }
+                }
+            }
+
+            // Etiquetas de estilo (saltan de línea si no caben)
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                profile.tags.forEach { tag ->
+                    Surface(
+                        shape = RoundedCornerShape(50),
+                        color = MaterialTheme.colorScheme.surface,
+                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.secondary)
+                    ) {
+                        Text(
+                            text = tag,
+                            style = MaterialTheme.typography.labelMedium,
+                            color = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
+                        )
+                    }
+                }
+            }
+
+            // Biografía del portfolio
+            Text(
+                text = profile.bio,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+
+            OutlinedButton(
+                onClick = { /* TODO: seguir al artista */ },
+                shape = RoundedCornerShape(12.dp),
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.secondary),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Seguir +", color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Medium)
+            }
+
+            // Pie: ubicación · idiomas · web
+            Text(
+                text = buildAnnotatedString {
+                    append(profile.location)
+                    profile.languages.forEach { append(" · $it") }
+                    append(" · ")
+                    withStyle(SpanStyle(color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)) {
+                        append("${profile.website} ↗")
+                    }
+                },
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
         }
     }
 }
