@@ -23,7 +23,7 @@ object ArtistProfileMocks {
         fullName = "Dani ávila",
         username = "avila.illo",
         location = "Málaga, España",
-        bio = "Ilustro lugares que no existen, pero se sienten como casa. Me gustan los tejados torcidos, los personajes que cuidan plantas y las historias que caben en una taza.",
+        bio = "Me gusta dibujar y me gustan los furros más de lo que debería y más de lo que me gustaría admitir",
         avatarUrl = null,
         tags = listOf("Fantasía acogedora", "Oscuro y lápiz", "Concept art"),
         isOpenToWork = true,
